@@ -6,6 +6,21 @@
 </head>
 <body>
     <h2>Daftar Buku</h2>
+
+    <?php
+    $messages = [
+        'created' => 'Data buku berhasil ditambahkan.',
+        'updated' => 'Data buku berhasil diperbarui.',
+        'deleted' => 'Data buku berhasil dihapus.',
+        'failed' => 'Operasi data buku gagal dilakukan.'
+    ];
+    $status = $_GET['status'] ?? '';
+    ?>
+
+    <?php if (isset($messages[$status])): ?>
+        <p><?= $messages[$status] ?></p>
+    <?php endif; ?>
+
     <a href="index.php?page=buku&action=create">Tambah Data</a>
 
     <table border="1" cellpadding="8" cellspacing="0">

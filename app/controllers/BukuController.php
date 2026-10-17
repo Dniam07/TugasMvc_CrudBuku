@@ -18,8 +18,15 @@ class BukuController
     public function store(): void
     {
         $data = $this->validateInput($_POST);
-        $this->model->insert($data);
-        header('Location: index.php?page=buku');
+
+        try {
+            $this->model->insert($data);
+            $status = 'created';
+        } catch (PDOException $e) {
+            $status = 'failed';
+        }
+
+        header("Location: index.php?page=buku&status={$status}");
         exit;
     }
 
@@ -40,16 +47,30 @@ class BukuController
     {
         $id = (int) ($_POST['id'] ?? 0);
         $data = $this->validateInput($_POST);
-        $this->model->update($id, $data);
-        header('Location: index.php?page=buku');
+
+        try {
+            $this->model->update($id, $data);
+            $status = 'updated';
+        } catch (PDOException $e) {
+            $status = 'failed';
+        }
+
+        header("Location: index.php?page=buku&status={$status}");
         exit;
     }
 
     public function delete(): void
     {
         $id = (int) ($_POST['id'] ?? 0);
-        $this->model->delete($id);
-        header('Location: index.php?page=buku');
+
+        try {
+            $this->model->delete($id);
+            $status = 'deleted';
+        } catch (PDOException $e) {
+            $status = 'failed';
+        }
+
+        header("Location: index.php?page=buku&status={$status}");
         exit;
     }
 
